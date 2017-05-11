@@ -2,7 +2,8 @@ package com.aconex.code.challenge;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
+
+import com.aconex.code.challenge.exception.InvalidArgumentException;
 
 /**
  * Main entry point to the 1-800Coding challenge
@@ -13,16 +14,16 @@ import java.util.stream.Collectors;
  */
 public class Runner {
 
-	private static final String COMMAND_PARAM_PREFIX = "-";
-
 	public static void main(String[] args) {
-		List<String> arguments = extractArguments(args);
-		System.out.println(arguments);
-	}
+		try {
+			List<String> userArguments = Arrays.asList(args);
+			InputReader inputReader = new InputReader();
+			inputReader.processUserInput(userArguments);
 
-	private static List<String> extractArguments(String[] args) {
-		return Arrays.asList(args).stream()
-			.filter(a -> a.startsWith(COMMAND_PARAM_PREFIX))
-			.collect(Collectors.toList());
+
+		} catch (InvalidArgumentException e) {
+			e.printStackTrace();
+		}
+
 	}
 }
