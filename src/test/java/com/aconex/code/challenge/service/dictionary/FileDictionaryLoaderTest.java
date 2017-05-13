@@ -19,16 +19,16 @@ public class FileDictionaryLoaderTest {
 			Dictionary dictionary = loader.load();
 			Assert.assertNotNull(dictionary);
 
-			Assert.assertTrue(dictionary.wordSearch("A"));
-			Assert.assertTrue(dictionary.wordSearch("apple"));
-			Assert.assertTrue(dictionary.wordSearch("APPLE"));
-			Assert.assertTrue(dictionary.wordSearch("elephant"));
-			Assert.assertTrue(dictionary.wordSearch("GREEN"));
-			Assert.assertTrue(dictionary.wordSearch("country"));
+			Assert.assertTrue(dictionary.findWord("A"));
+			Assert.assertTrue(dictionary.findWord("apple"));
+			Assert.assertTrue(dictionary.findWord("APPLE"));
+			Assert.assertTrue(dictionary.findWord("elephant"));
+			Assert.assertTrue(dictionary.findWord("GREEN"));
+			Assert.assertTrue(dictionary.findWord("country"));
 
-			Assert.assertFalse(dictionary.wordSearch("Test"));
-			Assert.assertFalse(dictionary.wordSearch(""));
-			Assert.assertFalse(dictionary.wordSearch(null));
+			Assert.assertFalse(dictionary.findWord("Test"));
+			Assert.assertFalse(dictionary.findWord(""));
+			Assert.assertFalse(dictionary.findWord(null));
 
 		} catch (Exception e) {
 			Assert.fail();

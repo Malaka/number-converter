@@ -22,7 +22,7 @@ public abstract class DictionaryLoader {
 	protected Dictionary getDictionary(Scanner scanner) {
 		List<String> words = new ArrayList<>();
 		while (scanner.hasNext()) {
-			String word = CommonsUtil.alphaOnly(scanner.nextLine()).toUpperCase();
+			String word = CommonsUtil.filterAlphaOnly(scanner.nextLine()).toUpperCase();
 			if (!words.contains(word)) { // do not want duplicate words
 				words.add(word);
 			}

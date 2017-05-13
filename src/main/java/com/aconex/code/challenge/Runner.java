@@ -36,9 +36,7 @@ public class Runner {
 				System.exit(0);
 			}
 
-			TelephoneLoaderFactory telephoneLoaderFactory = new TelephoneLoaderFactory();
-			TelDataLoader telDataLoader = telephoneLoaderFactory.createDateLoader(inputReader.getTelephoneData());
-
+			TelDataLoader telDataLoader = TelephoneLoaderFactory.createDateLoader(inputReader.getTelephoneData());
 			Stream<String> telephoneData = telDataLoader.load();
 
 			telephoneData.forEach(System.out::println);

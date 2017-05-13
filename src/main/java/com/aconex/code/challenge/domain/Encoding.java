@@ -1,13 +1,14 @@
 package com.aconex.code.challenge.domain;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
+
+import com.aconex.code.challenge.domain.telnumber.NumberNode;
+import com.aconex.code.challenge.domain.telnumber.StringNode;
+import com.aconex.code.challenge.domain.telnumber.TelNode;
+import com.aconex.code.challenge.util.CommonsUtil;
 
 import static java.util.stream.Collectors.mapping;
 import static java.util.stream.Collectors.toList;
@@ -36,50 +37,69 @@ public class Encoding {
 		this.encodeMapping = encodeMapping;
 	}
 
-	public Set<String> encode(String number) {
+	public List<List<TelNode>> encode(String number) {
 
-		if (number == null || number.isEmpty()) {
-			return new HashSet<>();
+		if (number == null || number.isEmpty() || !CommonsUtil.isDigit(number)) {
+			return new ArrayList<>();
 		}
 
-		// TODO validate number
-
-		List<List<Character>> encoded = new ArrayList<>();
+		List<List<TelNode>> encoded = new ArrayList<>();
 		number.chars().forEach(c -> encoded.add(getEncoding((char) c)));
 
-		List<List<Character>> lists = cartesianProduct(encoded);
+		/*List<List<Character>> lists = cartesianProduct(encoded);
 		return lists
 			.stream()
 			.map(chars -> chars
 				.stream()
 				.map(Object::toString)
 				.reduce((acc, e) -> acc + e).get())
-			.collect(Collectors.toSet());
+			.collect(Collectors.toSet());*/
+
+		return encoded;
 	}
 
-	private List<Character> getEncoding(Character c) {
-		return Optional.ofNullable(encodeMapping.get(c)).orElse(Stream.of(c).collect(Collectors.toList()));
+	private List<TelNode> getEncoding(Character c) {
+		List<TelNode> expansion = new ArrayList<>();
+		expansion.add(NumberNode.ofChar(c));
+		List<Character> encoding = encodeMapping.get(c);
+		if (encoding != null) {
+			List<StringNode> stringNodes = encoding
+				.stream()
+				.map(StringNode::ofChar)
+				.collect(Collectors.toList());
+
+			expansion.addAll(stringNodes);
+		}
+		return expansion;
 	}
 
-	private <T> List<List<T>> cartesianProduct(List<List<T>> lists) {
-		List<List<T>> resultLists = new ArrayList<>();
+	/*private List<List<Character>> cartesianProduct(List<List<Character>> lists) {
+		List<List<Character>> resultLists = new ArrayList<>();
 		if (lists.size() == 0) {
-			resultLists.add(new ArrayList<T>());
+			resultLists.add(new ArrayList<>());
 			return resultLists;
 		} else {
-			List<T> firstList = lists.get(0);
-			List<List<T>> remainingLists = cartesianProduct(lists.subList(1, lists.size()));
-			for (T condition : firstList) {
-				for (List<T> remainingList : remainingLists) {
-					ArrayList<T> resultList = new ArrayList<T>();
-					resultList.add(condition);
-					resultList.addAll(remainingList);
-					resultLists.add(resultList);
+			List<Character> firstList = lists.get(0);
+			List<List<Character>> remainingLists = cartesianProduct(lists.subList(1, lists.size()));
+			for (Character condition : firstList) {
+				for (List<Character> remainingList : remainingLists) {
+					ArrayList<Character> resultList = new ArrayList<>();
+					//
+					if (!remainingList.isEmpty()) {
+						if (!(isDigit(condition.toString()) && isDigit(remainingList.iterator().next().toString()))) {
+							resultList.add(condition);
+							resultList.addAll(remainingList);
+							resultLists.add(resultList);
+						}
+					} else {
+						resultList.add(condition);
+						resultLists.add(resultList);
+					}
 				}
 			}
 		}
 		return resultLists;
-	}
+	}*/
 
 	@Override
 	public String toString() {

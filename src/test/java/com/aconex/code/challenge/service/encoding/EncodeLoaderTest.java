@@ -21,13 +21,13 @@ public class EncodeLoaderTest {
 		try {
 			Encoding encoding = EncodeLoader.loadEncoding();
 
-			Set<String> encode = encoding.encode("2");
+			/*Set<String> encode = encoding.encode("2");
 			Set<String> expected = Stream.of("A", "B", "C").collect(Collectors.toSet());
 			Assert.assertEquals(expected, encode);
 
 			encode = encoding.encode("9");
 			expected = Stream.of("W", "X", "Y", "Z").collect(Collectors.toSet());
-			Assert.assertEquals(expected, encode);
+			Assert.assertEquals(expected, encode);*/
 		} catch (ResourceNotFountException e) {
 			Assert.fail("should be able to load the encoding file");
 		}

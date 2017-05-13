@@ -31,8 +31,8 @@ public class EncodeLoader {
 				String line = scanner.nextLine().trim();
 				if (!line.startsWith("#")) { // skip comments
 					String[] lineSplit = line.split("=");
-					String alpha = CommonsUtil.alphaOnly(lineSplit[0]).toUpperCase();
-					String number = CommonsUtil.digitOnly(lineSplit[1]);
+					String alpha = CommonsUtil.filterAlphaOnly(lineSplit[0]).toUpperCase();
+					String number = CommonsUtil.filterDigitOnly(lineSplit[1]);
 					mapData.put(alpha.charAt(0), number.charAt(0));
 				}
 			}

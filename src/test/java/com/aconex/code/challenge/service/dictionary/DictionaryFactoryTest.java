@@ -25,8 +25,8 @@ public class DictionaryFactoryTest {
 			dictionaryData = DictionaryData.file(filename);
 			dictionary = DictionaryFactory.createDictionary(dictionaryData);
 			Assert.assertTrue(dictionary != null);
-			Assert.assertTrue(dictionary.wordSearch("apple"));
-			Assert.assertFalse(dictionary.wordSearch("Test"));
+			Assert.assertTrue(dictionary.findWord("apple"));
+			Assert.assertFalse(dictionary.findWord("Test"));
 		} catch (ResourceNotFountException e) {
 			Assert.fail();
 		}
