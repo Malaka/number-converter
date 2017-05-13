@@ -6,8 +6,8 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import com.aconex.code.challenge.datafeed.DictionaryData;
-import com.aconex.code.challenge.datafeed.TelephoneData;
+import com.aconex.code.challenge.domain.DictionaryData;
+import com.aconex.code.challenge.domain.TelephoneData;
 import com.aconex.code.challenge.exception.InvalidArgumentException;
 
 /**
@@ -57,6 +57,12 @@ public class InputReader {
 				.map(a -> DictionaryData.file(a.substring(7)))
 				.findAny().orElse(DictionaryData.internal());
 		}
+	}
+
+	public static void printHelp() {
+		System.out.println("################################################# HELP #########################################");
+		System.out.println("./run.sh [-h] [--help] [-Dinput=<input file for tel numbers>] [-Ddic=<file path for dictionary>]");
+		System.out.println("################################################################################################");
 	}
 
 	private boolean validArg(String arg) {

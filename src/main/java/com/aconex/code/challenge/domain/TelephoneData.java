@@ -1,4 +1,6 @@
-package com.aconex.code.challenge.datafeed;
+package com.aconex.code.challenge.domain;
+
+import com.aconex.code.challenge.domain.Const.TelDataType;
 
 /**
  * @author: malaka

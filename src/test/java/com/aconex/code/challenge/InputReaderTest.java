@@ -8,10 +8,10 @@ import java.util.stream.Stream;
 import org.junit.Assert;
 import org.junit.Test;
 
-import com.aconex.code.challenge.datafeed.DictionaryData;
-import com.aconex.code.challenge.datafeed.DictionaryType;
-import com.aconex.code.challenge.datafeed.TelDataType;
-import com.aconex.code.challenge.datafeed.TelephoneData;
+import com.aconex.code.challenge.domain.DictionaryData;
+import com.aconex.code.challenge.domain.TelephoneData;
+import com.aconex.code.challenge.domain.Const.DictionaryType;
+import com.aconex.code.challenge.domain.Const.TelDataType;
 import com.aconex.code.challenge.exception.InvalidArgumentException;
 
 import static org.junit.Assert.fail;
