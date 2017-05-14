@@ -3,6 +3,8 @@ package com.aconex.code.challenge.domain.telnumber;
 import com.aconex.code.challenge.exception.UnsupportedOperation;
 
 /**
+ * Represent a Number part of the @{@link TelephoneNumber}
+ *
  * @author: malaka
  * Date: 5/13/17
  * Time: 12:34 PM

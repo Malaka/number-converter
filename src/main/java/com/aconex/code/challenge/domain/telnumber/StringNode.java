@@ -1,6 +1,9 @@
 package com.aconex.code.challenge.domain.telnumber;
 
 /**
+ * Represent a word part of the converted telephone number
+ * This can be combine with another string node to make a one
+ *
  * @author: malaka
  * Date: 5/13/17
  * Time: 12:37 PM

@@ -1,7 +1,7 @@
 package com.aconex.code.challenge.domain;
 
 /**
- * Domain constants
+ * Domain constants of the project
  *
  * @author: malaka
  * Date: 5/12/17

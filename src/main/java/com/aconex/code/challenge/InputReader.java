@@ -11,6 +11,7 @@ import com.aconex.code.challenge.domain.TelephoneData;
 import com.aconex.code.challenge.exception.InvalidArgumentException;
 
 /**
+ * Process User input form the cmd
  * @author: malaka
  * Date: 5/11/17
  * Time: 11:14 AM

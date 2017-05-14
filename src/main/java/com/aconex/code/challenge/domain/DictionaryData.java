@@ -3,6 +3,7 @@ package com.aconex.code.challenge.domain;
 import com.aconex.code.challenge.domain.Const.DictionaryType;
 
 /**
+ * Represent user input for dictionary loading selection
  * @author: malaka
  * Date: 5/11/17
  * Time: 12:37 PM

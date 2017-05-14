@@ -11,6 +11,7 @@ import com.aconex.code.challenge.domain.Dictionary;
 import com.aconex.code.challenge.exception.ResourceNotFountException;
 
 /**
+ * Loads dictionary from a user given file nam
  * @author: malaka
  * Date: 5/12/17
  * Time: 2:14 AM

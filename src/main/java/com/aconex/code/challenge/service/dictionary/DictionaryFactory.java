@@ -6,7 +6,7 @@ import com.aconex.code.challenge.domain.DictionaryData;
 import com.aconex.code.challenge.exception.ResourceNotFountException;
 
 /**
- * Dictionary loaded factory
+ * Factory for creating @{@link DictionaryLoader} based on the user selection
  *
  * @author: malaka
  * Date: 5/12/17

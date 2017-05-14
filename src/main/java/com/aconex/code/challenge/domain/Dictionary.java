@@ -8,6 +8,9 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
+ * Represent the dictionary. dictionaryData is always sorted.
+ * Thus binary search can be used for word search
+ *
  * @author: malaka
  * Date: 5/12/17
  * Time: 1:59 AM
@@ -26,15 +29,28 @@ public class Dictionary {
 		return new Dictionary(dictionaryData);
 	}
 
+	/**
+	 * Find a word is present in the dictionary or not
+	 *
+	 * @param word
+	 * 	word to test
+	 * @return true if if match is found in dictionary false otherwise. If the word is null or empty it will return false.
+	 */
 	public boolean findWord(String word) {
 
 		if (word == null || word.isEmpty()) {
 			return false;
 		}
-
 		return (Collections.binarySearch(this.dictionaryData, word.toUpperCase()) >= 0);
 	}
 
+	/**
+	 * Given a word this method will gives the all possible valid word sub sets
+	 *
+	 * @param word
+	 * 	word to expand
+	 * @return all valid sub sets of words
+	 */
 	public Set<List<String>> expandSearch(String word) {
 		Set<List<String>> expandResults = new HashSet<>();
 
@@ -86,6 +102,10 @@ public class Dictionary {
 		}
 
 		return result;
+	}
+
+	public List<String> getDictionaryData() {
+		return Collections.unmodifiableList(dictionaryData);
 	}
 
 	@Override

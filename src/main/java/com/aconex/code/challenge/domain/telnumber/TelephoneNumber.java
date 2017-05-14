@@ -6,6 +6,7 @@ import java.util.List;
 import com.aconex.code.challenge.domain.Const;
 
 /**
+ * Represent a Telephone number
  * @author: malaka
  * Date: 5/13/17
  * Time: 11:40 AM

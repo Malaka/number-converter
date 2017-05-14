@@ -3,6 +3,7 @@ package com.aconex.code.challenge.domain;
 import com.aconex.code.challenge.domain.Const.TelDataType;
 
 /**
+ * Represent user selection for telephone date input
  * @author: malaka
  * Date: 5/11/17
  * Time: 12:30 PM

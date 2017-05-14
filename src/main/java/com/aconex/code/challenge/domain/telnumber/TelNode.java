@@ -3,6 +3,7 @@ package com.aconex.code.challenge.domain.telnumber;
 import com.aconex.code.challenge.exception.UnsupportedOperation;
 
 /**
+ * Base class represent part of telephone number
  * @author: malaka
  * Date: 5/13/17
  * Time: 12:33 PM
@@ -30,5 +31,21 @@ public abstract class TelNode {
 	@Override
 	public String toString() {
 		return this.val;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (!(o instanceof TelNode)) return false;
+
+		TelNode telNode = (TelNode) o;
+
+		return val.equals(telNode.val);
+
+	}
+
+	@Override
+	public int hashCode() {
+		return val.hashCode();
 	}
 }

@@ -7,6 +7,7 @@ import java.util.logging.Logger;
 import java.util.stream.Stream;
 
 /**
+ * Reads telephone numbers from STD IN
  * @author: malaka
  * Date: 5/11/17
  * Time: 2:57 PM

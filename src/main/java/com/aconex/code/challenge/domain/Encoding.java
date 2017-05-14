@@ -24,13 +24,17 @@ import static java.util.stream.Collectors.toList;
  */
 public class Encoding {
 
-	// key : Number, Value : Set of Char which maps to the Number
+	// key : Number, Value : Set of StringNode which maps to the Number
 	private Map<Character, List<StringNode>> encodeMapping;
 
 	private Encoding(Map<Character, List<StringNode>> encodeMapping) {
 		this.encodeMapping = encodeMapping;
 	}
 
+	/*
+	 encoding date from resource file is converted and store based on number as the key
+	 because we need to find the possible char for given number. Not the other way around.
+	 */
 	public static Encoding of(Map<Character, Character> encodeMapping) {
 		// transform the map to be key by number
 		Map<Character, List<StringNode>> encoding = encodeMapping.entrySet()
@@ -41,8 +45,19 @@ public class Encoding {
 		return new Encoding(encoding);
 	}
 
+	/**
+	 * Number to TelNode(Char) encoding.
+	 * <p>
+	 * Termination will always be added at the beginning of each encoding.
+	 * This way we can identify the end of of the string when the expansion with recursion
+	 *
+	 * @param number
+	 * 	number to encode
+	 * @return result of the encoding
+	 */
 	public List<List<TelNode>> encode(String number) {
 
+		// adding the termination
 		List<List<TelNode>> encoded = new ArrayList<>();
 		encoded.add(Collections.singletonList(Termination.of()));
 

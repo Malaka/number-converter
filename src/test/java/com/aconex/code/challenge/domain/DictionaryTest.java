@@ -22,8 +22,6 @@ public class DictionaryTest {
 	@Before
 	public void setUp() throws Exception {
 		dictionaryData = Stream.of(
-			"APPLE",
-			"APP",
 			"LE",
 			"EYE",
 			"PQR",
@@ -31,10 +29,20 @@ public class DictionaryTest {
 			"QR",
 			"P",
 			"Q",
-			"R"
-			)
+			"R",
+			"APPLE",
+			"APP"
+		)
 			.collect(Collectors.toList());
 	}
+
+	@Test
+	public void testSorting() throws Exception {
+		Dictionary dictionary = Dictionary.of(dictionaryData);
+		List<String> dictionaryData = dictionary.getDictionaryData();
+		Assert.assertEquals("APP", dictionaryData.iterator().next());
+	}
+
 
 	@Test
 	public void findWord() throws Exception {
@@ -68,7 +76,7 @@ public class DictionaryTest {
 		Assert.assertEquals(expected, transform(result));
 
 		result = dictionary.expandSearch("PQR");
-		expected = Stream.of("PQR", "PQ-R","P-QR", "P-Q-R").collect(Collectors.toSet());
+		expected = Stream.of("PQR", "PQ-R", "P-QR", "P-Q-R").collect(Collectors.toSet());
 		Assert.assertEquals(expected, transform(result));
 	}
 
