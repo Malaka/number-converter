@@ -17,14 +17,18 @@ import com.aconex.code.challenge.exception.InvalidArgumentException;
  */
 public class InputReader {
 
-	private boolean displayHelp = false;
-
-	private TelephoneData telephoneData;
-
-	private DictionaryData dictionaryData;
-
 	private static final Set<String> ARGS = Stream.of("-h", "--help", "-Dinput=", "-dinput=", "-Ddic=", "-ddic=")
 		.collect(Collectors.toSet());
+	private boolean displayHelp = false;
+	private TelephoneData telephoneData;
+	private DictionaryData dictionaryData;
+
+	public static void printHelp() {
+		System.out.println(
+			"./run.sh [-h] [--help]");
+		System.out.println("\t [-Dinput=<input file for tel numbers>] [-dinput=<input file for tel numbers>]");
+		System.out.println("\t [-Ddic=<file path for dictionary>] [-Ddic=<file path for dictionary>]");
+	}
 
 	public void processUserInput(List<String> userInputs) throws InvalidArgumentException {
 
@@ -57,12 +61,6 @@ public class InputReader {
 				.map(a -> DictionaryData.file(a.substring(7)))
 				.findAny().orElse(DictionaryData.internal());
 		}
-	}
-
-	public static void printHelp() {
-		System.out.println("################################################# HELP #########################################");
-		System.out.println("./run.sh [-h] [--help] [-Dinput=<input file for tel numbers>] [-Ddic=<file path for dictionary>]");
-		System.out.println("################################################################################################");
 	}
 
 	private boolean validArg(String arg) {

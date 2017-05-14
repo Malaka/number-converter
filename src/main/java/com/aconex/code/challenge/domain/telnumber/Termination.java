@@ -9,12 +9,12 @@ import com.aconex.code.challenge.exception.UnsupportedOperation;
  */
 public class Termination extends TelNode {
 
-	public static Termination of() {
-		return new Termination("");
-	}
-
 	private Termination(String val) {
 		super(val);
+	}
+
+	public static Termination of() {
+		return new Termination("");
 	}
 
 	@Override

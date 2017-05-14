@@ -11,13 +11,7 @@ public final class Const {
 
 	public static final String INTERNAL_DICTIONARY_RESOURCE = "dictionary.txt";
 	public static final String NUMBER_ENCODING_RESOURCE = "char_encodings.properties";
-
-
 	public static final String SEPARATOR = "-";
-	public static final String WHITESPACE = " ";
-
-
-
 
 	// Supported dictionary input date types
 	public enum DictionaryType {

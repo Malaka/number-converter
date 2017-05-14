@@ -14,12 +14,12 @@ public class TelephoneNumber {
 
 	private List<TelNode> nodes;
 
-	public static TelephoneNumber of(List<TelNode> nodes) {
-		return new TelephoneNumber(nodes);
-	}
-
 	private TelephoneNumber(List<TelNode> nodes) {
 		this.nodes = nodes;
+	}
+
+	public static TelephoneNumber of(List<TelNode> nodes) {
+		return new TelephoneNumber(nodes);
 	}
 
 	@Override

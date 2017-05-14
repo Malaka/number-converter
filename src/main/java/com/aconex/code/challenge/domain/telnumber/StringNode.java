@@ -8,16 +8,16 @@ package com.aconex.code.challenge.domain.telnumber;
 public class StringNode extends TelNode {
 
 
+	private StringNode(String val) {
+		super(val);
+	}
+
 	public static StringNode of(String val) {
 		return new StringNode(val);
 	}
 
 	public static StringNode ofChar(Character val) {
 		return new StringNode(val.toString());
-	}
-
-	private StringNode(String val) {
-		super(val);
 	}
 
 	@Override

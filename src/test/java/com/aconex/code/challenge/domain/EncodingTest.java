@@ -70,10 +70,16 @@ public class EncodingTest {
 		Assert.assertEquals("Only Terminator for null input", 1, encode.size());
 		Assert.assertTrue(iterator.next().iterator().next() instanceof Termination);
 
+		encode = encoding.encode("1");
+		iterator = encode.iterator();
+		Assert.assertTrue(iterator.next().iterator().next() instanceof Termination);
+		Set<String> expected = Stream.of("1").collect(Collectors.toSet());
+		Assert.assertEquals(expected, convert(iterator.next()));
+
 		encode = encoding.encode("2");
 		iterator = encode.iterator();
 		Assert.assertTrue(iterator.next().iterator().next() instanceof Termination);
-		Set<String> expected = Stream.of("2", "a", "c", "b").collect(Collectors.toSet());
+		expected = Stream.of("2", "a", "c", "b").collect(Collectors.toSet());
 		Assert.assertEquals(expected, convert(iterator.next()));
 
 		encode = encoding.encode("3");

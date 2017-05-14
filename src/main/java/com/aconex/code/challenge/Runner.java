@@ -6,10 +6,19 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Stream;
 
+import com.aconex.code.challenge.domain.Dictionary;
+import com.aconex.code.challenge.domain.Encoding;
+import com.aconex.code.challenge.domain.telnumber.TelephoneNumber;
 import com.aconex.code.challenge.exception.InvalidArgumentException;
 import com.aconex.code.challenge.exception.ResourceNotFountException;
+import com.aconex.code.challenge.exception.UnsupportedOperation;
+import com.aconex.code.challenge.service.ConverterService;
+import com.aconex.code.challenge.service.ConverterServiceImpl;
+import com.aconex.code.challenge.service.dictionary.DictionaryFactory;
+import com.aconex.code.challenge.service.encoding.EncodeLoader;
 import com.aconex.code.challenge.service.telephone.TelDataLoader;
 import com.aconex.code.challenge.service.telephone.TelephoneLoaderFactory;
+import com.aconex.code.challenge.util.CommonsUtil;
 
 /**
  * Main entry point to the 1-800Coding challenge
@@ -36,10 +45,20 @@ public class Runner {
 				System.exit(0);
 			}
 
+			// load encoding
+			Encoding encoding = EncodeLoader.loadEncoding();
+
+			// load dictionary
+			Dictionary dictionary = DictionaryFactory.createDictionary(inputReader.getDictionaryData());
+			ConverterService converterService = new ConverterServiceImpl(dictionary, encoding);
+
+			// read user input
 			TelDataLoader telDataLoader = TelephoneLoaderFactory.createDateLoader(inputReader.getTelephoneData());
 			Stream<String> telephoneData = telDataLoader.load();
 
-			telephoneData.forEach(System.out::println);
+			// convert and display the result
+			System.out.println("Start processing the numbers\n");
+			telephoneData.forEach(a -> printResult(a, converterService));
 
 		} catch (InvalidArgumentException e) {
 			log.log(Level.WARNING, e.getMessage());
@@ -48,6 +67,18 @@ public class Runner {
 		} catch (ResourceNotFountException e) {
 			log.log(Level.SEVERE, e.getMessage());
 			System.exit(-1);
+		}
+	}
+
+	private static void printResult(String telNumber, ConverterService converterService) {
+		StringBuffer sb = new StringBuffer(String.format("[%s] -> ", telNumber));
+		String filteredNumber = CommonsUtil.filterDigitOnly(telNumber);
+		try {
+			List<TelephoneNumber> convert = converterService.convert(filteredNumber);
+			sb.append(convert);
+			System.out.println(sb.toString());
+		} catch (UnsupportedOperation unsupportedOperation) {
+			unsupportedOperation.printStackTrace(System.err);
 		}
 	}
 }

@@ -16,14 +16,14 @@ public class Dictionary {
 
 	private List<String> dictionaryData;
 
-	public static Dictionary of(List<String> dictionaryData) {
-		return new Dictionary(dictionaryData);
-	}
-
 	private Dictionary(List<String> dictionaryData) {
 		// we sort the list first thus leverage the binary search for finding words
 		Collections.sort(dictionaryData);
 		this.dictionaryData = dictionaryData;
+	}
+
+	public static Dictionary of(List<String> dictionaryData) {
+		return new Dictionary(dictionaryData);
 	}
 
 	public boolean findWord(String word) {

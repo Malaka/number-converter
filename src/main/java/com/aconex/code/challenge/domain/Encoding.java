@@ -1,10 +1,10 @@
 package com.aconex.code.challenge.domain;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import com.aconex.code.challenge.domain.telnumber.NumberNode;
 import com.aconex.code.challenge.domain.telnumber.StringNode;
@@ -27,6 +27,10 @@ public class Encoding {
 	// key : Number, Value : Set of Char which maps to the Number
 	private Map<Character, List<StringNode>> encodeMapping;
 
+	private Encoding(Map<Character, List<StringNode>> encodeMapping) {
+		this.encodeMapping = encodeMapping;
+	}
+
 	public static Encoding of(Map<Character, Character> encodeMapping) {
 		// transform the map to be key by number
 		Map<Character, List<StringNode>> encoding = encodeMapping.entrySet()
@@ -37,14 +41,10 @@ public class Encoding {
 		return new Encoding(encoding);
 	}
 
-	private Encoding(Map<Character, List<StringNode>> encodeMapping) {
-		this.encodeMapping = encodeMapping;
-	}
-
 	public List<List<TelNode>> encode(String number) {
 
 		List<List<TelNode>> encoded = new ArrayList<>();
-		encoded.add(Stream.of(Termination.of()).collect(Collectors.toList()));
+		encoded.add(Collections.singletonList(Termination.of()));
 
 		if (number == null || number.isEmpty() || !CommonsUtil.isDigit(number)) {
 			return encoded;
@@ -58,7 +58,9 @@ public class Encoding {
 		List<TelNode> expansion = new ArrayList<>();
 		expansion.add(NumberNode.ofChar(c));
 		List<StringNode> encoding = encodeMapping.get(c);
-		expansion.addAll(encoding);
+		if (encoding != null) {
+			expansion.addAll(encoding);
+		}
 		return expansion;
 	}
 

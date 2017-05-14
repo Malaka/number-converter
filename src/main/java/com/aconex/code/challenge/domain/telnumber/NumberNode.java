@@ -9,16 +9,16 @@ import com.aconex.code.challenge.exception.UnsupportedOperation;
  */
 public class NumberNode extends TelNode {
 
+	private NumberNode(String val) {
+		super(val);
+	}
+
 	public static NumberNode of(String val) {
 		return new NumberNode(val);
 	}
 
 	public static NumberNode ofChar(Character val) {
 		return new NumberNode(val.toString());
-	}
-
-	private NumberNode(String val) {
-		super(val);
 	}
 
 	@Override

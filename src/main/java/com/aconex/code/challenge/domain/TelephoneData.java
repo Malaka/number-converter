@@ -13,17 +13,17 @@ public class TelephoneData {
 
 	private String dataPath;
 
+	private TelephoneData(TelDataType dataInputType, String dataPath) {
+		this.dataInputType = dataInputType;
+		this.dataPath = dataPath;
+	}
+
 	public static TelephoneData file(String dataPath) {
 		return new TelephoneData(TelDataType.FILE, dataPath);
 	}
 
 	public static TelephoneData stdin() {
 		return new TelephoneData(TelDataType.STDIN, "");
-	}
-
-	private TelephoneData(TelDataType dataInputType, String dataPath) {
-		this.dataInputType = dataInputType;
-		this.dataPath = dataPath;
 	}
 
 	public TelDataType getDataInputType() {

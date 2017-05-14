@@ -13,17 +13,17 @@ public class DictionaryData {
 
 	private String dataPath;
 
+	private DictionaryData(DictionaryType dictionaryType, String dataPath) {
+		this.dictionaryType = dictionaryType;
+		this.dataPath = dataPath;
+	}
+
 	public static DictionaryData file(String dataPath) {
 		return new DictionaryData(DictionaryType.FILE, dataPath);
 	}
 
 	public static DictionaryData internal() {
 		return new DictionaryData(DictionaryType.INTERNAL, "");
-	}
-
-	private DictionaryData(DictionaryType dictionaryType, String dataPath) {
-		this.dictionaryType = dictionaryType;
-		this.dataPath = dataPath;
 	}
 
 	public DictionaryType getDictionaryType() {
