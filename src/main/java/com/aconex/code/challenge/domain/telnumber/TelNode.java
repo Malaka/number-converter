@@ -17,7 +17,9 @@ public abstract class TelNode {
 
 	public abstract boolean isDigit();
 
-	public abstract boolean isValidate();
+	public abstract boolean isString();
+
+	public abstract boolean isTerminating();
 
 	public abstract TelNode combine(TelNode node) throws UnsupportedOperation;
 

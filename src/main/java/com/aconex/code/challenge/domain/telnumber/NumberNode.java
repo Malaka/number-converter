@@ -27,7 +27,12 @@ public class NumberNode extends TelNode {
 	}
 
 	@Override
-	public boolean isValidate() {
+	public boolean isString() {
+		return false;
+	}
+
+	@Override
+	public boolean isTerminating() {
 		return false;
 	}
 

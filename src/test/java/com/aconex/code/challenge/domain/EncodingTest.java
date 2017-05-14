@@ -1,6 +1,8 @@
 package com.aconex.code.challenge.domain;
 
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -9,6 +11,9 @@ import java.util.stream.Stream;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+
+import com.aconex.code.challenge.domain.telnumber.TelNode;
+import com.aconex.code.challenge.domain.telnumber.Termination;
 
 /**
  * @author: malaka
@@ -54,44 +59,79 @@ public class EncodingTest {
 	public void creation() throws Exception {
 		Encoding encoding = Encoding.of(encodeMapping);
 
-		/*Set<String> encode = encoding.encode("2");
+
+		List<List<TelNode>> encode = encoding.encode(null);
+		Iterator<List<TelNode>> iterator = encode.iterator();
+		Assert.assertEquals("Only Terminator for null input", 1, encode.size());
+		Assert.assertTrue(iterator.next().iterator().next() instanceof Termination);
+
+		encode = encoding.encode("#");
+		iterator = encode.iterator();
+		Assert.assertEquals("Only Terminator for null input", 1, encode.size());
+		Assert.assertTrue(iterator.next().iterator().next() instanceof Termination);
+
+		encode = encoding.encode("2");
+		iterator = encode.iterator();
+		Assert.assertTrue(iterator.next().iterator().next() instanceof Termination);
 		Set<String> expected = Stream.of("2", "a", "c", "b").collect(Collectors.toSet());
-		Assert.assertEquals(expected, encode);
+		Assert.assertEquals(expected, convert(iterator.next()));
 
 		encode = encoding.encode("3");
+		iterator = encode.iterator();
+		Assert.assertTrue(iterator.next().iterator().next() instanceof Termination);
 		expected = Stream.of("3", "d", "e", "f").collect(Collectors.toSet());
-		Assert.assertEquals(expected, encode);
+		Assert.assertEquals(expected, convert(iterator.next()));
 
 		encode = encoding.encode("4");
+		iterator = encode.iterator();
+		Assert.assertTrue(iterator.next().iterator().next() instanceof Termination);
 		expected = Stream.of("4", "g", "h", "i").collect(Collectors.toSet());
-		Assert.assertEquals(expected, encode);
+		Assert.assertEquals(expected, convert(iterator.next()));
 
 		encode = encoding.encode("5");
+		iterator = encode.iterator();
+		Assert.assertTrue(iterator.next().iterator().next() instanceof Termination);
 		expected = Stream.of("5", "j", "k", "l").collect(Collectors.toSet());
-		Assert.assertEquals(expected, encode);
+		Assert.assertEquals(expected, convert(iterator.next()));
 
 		encode = encoding.encode("6");
+		iterator = encode.iterator();
+		Assert.assertTrue(iterator.next().iterator().next() instanceof Termination);
 		expected = Stream.of("6", "m", "n", "o").collect(Collectors.toSet());
-		Assert.assertEquals(expected, encode);
+		Assert.assertEquals(expected, convert(iterator.next()));
 
 		encode = encoding.encode("7");
+		iterator = encode.iterator();
+		Assert.assertTrue(iterator.next().iterator().next() instanceof Termination);
 		expected = Stream.of("7", "p", "q", "r", "s").collect(Collectors.toSet());
-		Assert.assertEquals(expected, encode);
+		Assert.assertEquals(expected, convert(iterator.next()));
 
 		encode = encoding.encode("8");
+		iterator = encode.iterator();
+		Assert.assertTrue(iterator.next().iterator().next() instanceof Termination);
 		expected = Stream.of("8", "t", "u", "v").collect(Collectors.toSet());
-		Assert.assertEquals(expected, encode);
+		Assert.assertEquals(expected, convert(iterator.next()));
 
 		encode = encoding.encode("9");
+		iterator = encode.iterator();
+		Assert.assertTrue(iterator.next().iterator().next() instanceof Termination);
 		expected = Stream.of("9", "w", "x", "y", "z").collect(Collectors.toSet());
-		Assert.assertEquals(expected, encode);*/
+		Assert.assertEquals(expected, convert(iterator.next()));
+	}
+
+	private Set<String> convert(List<TelNode> encoding) {
+		return encoding
+			.stream()
+			.filter(a -> !a.isTerminating())
+			.map(TelNode::getVal)
+			.collect(Collectors.toSet());
 	}
 
 	@Test
 	public void encode() throws Exception {
 		Encoding encoding = Encoding.of(encodeMapping);
 
-		Assert.assertTrue("Empy set for null input", encoding.encode(null).isEmpty());
+
 
 		/*Set<String> encode = encoding.encode("1");
 		Set<String> expected = Stream.of("1").collect(Collectors.toSet());

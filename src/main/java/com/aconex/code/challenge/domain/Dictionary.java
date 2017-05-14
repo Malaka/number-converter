@@ -2,7 +2,9 @@ package com.aconex.code.challenge.domain;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -33,18 +35,18 @@ public class Dictionary {
 		return (Collections.binarySearch(this.dictionaryData, word.toUpperCase()) >= 0);
 	}
 
-	public List<List<String>> expandSearch(String word) {
-		List<List<String>> expandResults = new ArrayList<>();
+	public Set<List<String>> expandSearch(String word) {
+		Set<List<String>> expandResults = new HashSet<>();
 
 		if (word == null || word.isEmpty()) {
 			return expandResults;
 		}
 
-		List<List<String>> subWords = subStrings(word);
+		List<List<String>> subWords = subStrings(word.toUpperCase());
 		return subWords
 			.stream()
 			.filter(this::validWordCombo)
-			.collect(Collectors.toList());
+			.collect(Collectors.toSet());
 	}
 
 	private boolean validWordCombo(List<String> combo) {
@@ -56,18 +58,21 @@ public class Dictionary {
 			.orElse(true);
 	}
 
+	/**
+	 * Given a string expand to sub sets which
+	 * [abc] -> [[a-bc],[ab-c],[a-b-c],[abc]]
+	 */
 	private List<List<String>> subStrings(String input) {
 
-		// Base case: There's only one way to split up a single character
-		// string, and that is ["x"] where x is the character.
+		// [x] ==> x
 		if (input.length() == 1)
 			return Collections.singletonList(Collections.singletonList(input));
 
 		// To hold the result
 		List<List<String>> result = new ArrayList<>();
 
-		// Recurse (since you tagged the question with recursion ;)
-		for (List<String> subResult : subStrings(input.substring(1))) {
+		List<List<String>> subStrings = subStrings(input.substring(1));
+		for (List<String> subResult : subStrings) {
 
 			// Case: Don't split
 			List<String> l2 = new ArrayList<>(subResult);

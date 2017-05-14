@@ -31,7 +31,8 @@ public class ConverterServiceImplTest {
 			Encoding encoding = EncodeLoader.loadEncoding();
 
 			ConverterService converterService = new ConverterServiceImpl(dictionary, encoding);
-			List<TelephoneNumber> convert = converterService.convert("127753486");
+			//List<TelephoneNumber> convert = converterService.convert("2775324861");
+			List<TelephoneNumber> convert = converterService.convert("225563");
 			System.out.println(convert);
 		} catch (ResourceNotFountException | UnsupportedOperation e) {
 			Assert.fail();

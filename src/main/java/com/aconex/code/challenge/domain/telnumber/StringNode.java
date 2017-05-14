@@ -7,23 +7,17 @@ package com.aconex.code.challenge.domain.telnumber;
  */
 public class StringNode extends TelNode {
 
-	private boolean validated;
 
 	public static StringNode of(String val) {
-		return new StringNode(val, false);
-	}
-
-	public static StringNode validWord(String val) {
-		return new StringNode(val, true);
+		return new StringNode(val);
 	}
 
 	public static StringNode ofChar(Character val) {
-		return new StringNode(val.toString(), false);
+		return new StringNode(val.toString());
 	}
 
-	private StringNode(String val, boolean validated) {
+	private StringNode(String val) {
 		super(val);
-		this.validated = validated;
 	}
 
 	@Override
@@ -32,8 +26,13 @@ public class StringNode extends TelNode {
 	}
 
 	@Override
-	public boolean isValidate() {
-		return validated;
+	public boolean isString() {
+		return true;
+	}
+
+	@Override
+	public boolean isTerminating() {
+		return false;
 	}
 
 	@Override

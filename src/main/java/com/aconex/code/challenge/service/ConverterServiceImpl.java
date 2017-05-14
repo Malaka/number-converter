@@ -2,6 +2,7 @@ package com.aconex.code.challenge.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import com.aconex.code.challenge.domain.Dictionary;
@@ -34,7 +35,6 @@ public class ConverterServiceImpl implements ConverterService {
 		List<List<TelNode>> matchResults = this.expandAndSearch(encoded);
 		return matchResults
 			.stream()
-			.filter(this::filterWorlds)
 			.map(TelephoneNumber::of)
 			.collect(Collectors.toList());
 	}
@@ -50,40 +50,24 @@ public class ConverterServiceImpl implements ConverterService {
 			for (TelNode newAddition : firstList) {
 				for (List<TelNode> remainingList : remainingLists) {
 					ArrayList<TelNode> resultList = new ArrayList<>();
-					//
 					if (!remainingList.isEmpty()) {
-						TelNode firstRemainingNode = remainingList.iterator().next();
+						TelNode firstRemaining = remainingList.iterator().next();
 						// two consecutive numbers are not possible - ignore the combination
-						if (!(newAddition.isDigit() && firstRemainingNode.isDigit())) {
-							if (newAddition.isDigit()) {// new addition is a number. Remaining first node build complete
-								// check for correct word through dictionary
-								String possibleWord = firstRemainingNode.getVal();
-								List<List<String>> validWordComb = dictionary.expandSearch(possibleWord);
-								if (!validWordComb.isEmpty()) {
-
-									for (List<String> wordCombo : validWordComb) {
-										ArrayList<TelNode> wordExpansion = new ArrayList<>();
-										List<StringNode> stringNodes = wordCombo
-											.stream()
-											.map(StringNode::validWord)
-											.collect(Collectors.toList());
-										wordExpansion.add(NumberNode.of(newAddition.getVal()));
-										wordExpansion.addAll(stringNodes);
-										wordExpansion.addAll(remainingList.subList(1, remainingList.size()));
-										resultLists.add(wordExpansion);
-									}
-								}
-							} else {// next addition is also a char
-								if (!firstRemainingNode.isDigit()) { // possible for combination
-									TelNode combine = newAddition.combine(firstRemainingNode);
-									resultList.add(combine);
-									resultList.addAll(remainingList.subList(1, remainingList.size()));
-									resultLists.add(resultList);
-								} else {
+						if (!(newAddition.isDigit() && firstRemaining.isDigit())) {
+							// new addition is a number or terminating. check for correct word through dictionary
+							if ((newAddition.isDigit() || newAddition.isTerminating()) && firstRemaining.isString()) {
+								validateWords(newAddition, firstRemaining, remainingList, resultLists);
+							} else if (firstRemaining.isString()) { // next addition is char. possible for combining
+								TelNode combine = newAddition.combine(firstRemaining);
+								resultList.add(combine);
+								resultList.addAll(remainingList.subList(1, remainingList.size()));
+								resultLists.add(resultList);
+							} else { // first remaining is number and addition is char or terminating
+								if (!newAddition.isTerminating()) {
 									resultList.add(newAddition);
-									resultList.addAll(remainingList);
-									resultLists.add(resultList);
 								}
+								resultList.addAll(remainingList);
+								resultLists.add(resultList);
 							}
 						}
 					} else {  // no remaining list.Add the new addition
@@ -96,13 +80,23 @@ public class ConverterServiceImpl implements ConverterService {
 		return resultLists;
 	}
 
-	private boolean filterWorlds(List<TelNode> combination) {
-		return combination
-			.stream()
-			.filter(a -> !a.isDigit())
-			.filter(a -> !dictionary.findWord(a.getVal()))
-			.map(a -> false)
-			.findFirst()
-			.orElse(true);
+	private void validateWords(TelNode newAddition, TelNode firstRemainingNode, List<TelNode> remainingList, List<List<TelNode>> resultLists) {
+		String possibleWord = firstRemainingNode.getVal();
+		Set<List<String>> validWordComb = dictionary.expandSearch(possibleWord);
+		if (!validWordComb.isEmpty()) {
+			for (List<String> wordCombo : validWordComb) {
+				ArrayList<TelNode> wordExpansion = new ArrayList<>();
+				List<StringNode> stringNodes = wordCombo
+					.stream()
+					.map(StringNode::of)
+					.collect(Collectors.toList());
+				if (newAddition.isDigit()) {
+					wordExpansion.add(NumberNode.of(newAddition.getVal()));
+				}
+				wordExpansion.addAll(stringNodes);
+				wordExpansion.addAll(remainingList.subList(1, remainingList.size()));
+				resultLists.add(wordExpansion);
+			}
+		}
 	}
 }
