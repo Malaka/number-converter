@@ -15,7 +15,7 @@ How to run the application
 `mvn clean install` : compiles the project
 
 `./run.sh` : run the project. Please use `run.sh -h` for help.
-You can also use the `mvn exec:java` with name arguments
+You can also use the `mvn exec:java` with same arguments
 
 Problem Abstract
 
